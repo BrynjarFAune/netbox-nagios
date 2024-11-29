@@ -1,37 +1,34 @@
 import json
-import socket
+import requests
 
 TIMEOUT = 3  # seconds
 BUFFER_SIZE = 4096  # bytes
 
+def hoststatus(hostname: str, api_url: str, api_key: str):
+    headers = {"Authorization": f"Bearer {api_key}"}
+    url = f"{api_url}/objects/hoststatus"
 
-def hoststatus(hostname: str, livestatus_host: str, livestatus_port: int):
-    """Fetches livestatus from Nagios about hostname."""
-    query = (
-        "GET hosts\n"
-        + "Filter: host_name = %s\n" % hostname
-        + "OutputFormat: json\n"
-        + "\n"
-    )
+    try:
+        response = requests.get(url, headers=headers, timeout=TIMEOUT)
+        response.raise_for_status()
 
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.settimeout(TIMEOUT)
-    s.connect((livestatus_host, livestatus_port))
-    s.sendall(query.encode("utf-8"))
-    s.shutdown(socket.SHUT_WR)
-
-    data = []
-    while True:
-        buf_data = s.recv(BUFFER_SIZE)
-        if not buf_data:
-            break
-        data.append(buf_data)
-    s.close()
-
-    if not data:
+        data = response.json()
+        for host in data.get("hoststatus", []):
+            if host.get("host_name") == hostname:
+                return host
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching host status: {e}")
         return None
-    data = json.loads(b"".join(data))
+    
+    return None
 
-    if not data or len(data) <= 1:
-        return None
-    return dict(zip(data[0], data[1]))
+
+
+
+
+
+
+
+
+
+

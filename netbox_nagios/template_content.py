@@ -10,15 +10,9 @@ class NagiosStatus(PluginTemplateExtension):
         super().__init__(context)
         self.settings = self.context["settings"].PLUGINS_CONFIG["netbox_nagios"]
         self.hostname = self.context["object"].name or ""  # name can be None.
-        self.api_url = self.get_api_url()
+        self.api_url = self.settings["api_url"]
         self.api_key = self.settings["api_key"]
         self.nagios_base_url = self.get_nagios_base_url()
-
-    def get_api_url(self):
-        for regex, api_url in self.settings.get("api_url_overrides", []):
-            if re.search(regex, self.hostname):
-                return api_url
-        return self.settings["api_url"]
 
     def get_nagios_base_url(self):
         """Uses settings and potential overrides to determine the Nagios url."""

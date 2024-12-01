@@ -5,11 +5,10 @@ TIMEOUT = 3  # seconds
 BUFFER_SIZE = 4096  # bytes
 
 def hoststatus(hostname: str, api_url: str, api_key: str):
-    headers = {"Authorization": f"Bearer {api_key}"}
-    url = f"{api_url}/objects/hoststatus"
+    url = f"{api_url}/objects/hoststatus?apikey={api_key}"
 
     try:
-        response = requests.get(url, headers=headers, timeout=TIMEOUT)
+        response = requests.get(url, timeout=TIMEOUT)
         response.raise_for_status()
 
         data = response.json()

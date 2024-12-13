@@ -1,6 +1,6 @@
 import re
 
-from extras.plugins import PluginTemplateExtension  # pylint: disable=import-error
+from netbox.plugins import PluginTemplateExtension  # pylint: disable=import-error
 
 from . import livestatus
 

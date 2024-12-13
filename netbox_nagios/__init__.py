@@ -1,12 +1,9 @@
-"""
 try:
-    from extras.plugins import PluginConfig
+    from netbox.plugins import PluginConfig
 except ImportError:
     # Dummy so install of wheel works without Netbox.
     class PluginConfig:
         pass
-"""
-from netbox.plugins import PluginConfig
 from .version import VERSION
 
 

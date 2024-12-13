@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.9] - 2024-12-13
+### Changed (by Brynjar)
+- Updated netbox_nagios to work on NetBox 4 and with NagiosXI
+
 ## [0.0.8] - 2022-01-22
 ### Fixed
 - Updated netbox_nagios to work on Netbox 3

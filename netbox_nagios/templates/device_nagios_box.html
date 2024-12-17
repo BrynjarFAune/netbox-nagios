@@ -10,13 +10,13 @@
                         <span class="mdi mdi-server-network" aria-hidden="true"></span> Host Status
                     </a>
                 </td>
-                <td><span class="badge bg-{{ nagios.current_state|nagios_status_color }}">{{ nagios.current_state|nagios_status_string }}</span></td>
+		<td><span class="badge bg-{{ nagios.current_state|nagios_status_color }} text-white">{{ nagios.current_state|nagios_status_string }}</span></td>
                 <td></td>
             </tr>
             {% for service in nagios.services %}
             <tr>
                 <td><a href='{{ nagios_base_url }}includes/components/xicore/status.php?show=servicedetail&host={{ object.name }}&service={{ service.display_name|urlencode }}' target="_blank">{{ service.display_name }}</a></td>
-                <td><span class="badge bg-{{ service.1|nagios_status_color }}">{{ service.1|nagios_status_string }}</span></td>
+                <td><span class="badge bg-{{ service.current_state|nagios_status_color }} text-white">{{ service.current_state|nagios_status_string }}</span></td>
                 <td>{{ service.3 }}</td>
             </tr>
             {% endfor %}

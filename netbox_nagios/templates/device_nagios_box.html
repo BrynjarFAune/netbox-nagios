@@ -6,16 +6,16 @@
         <table class="table table-hover attr-table">
             <tr>
                 <td>
-                    <a href='{{ nagios_base_url }}status.cgi?host={{ object.name }}' target="_blank">
+                    <a href='{{ nagios_base_url }}includes/components/xicore/status.php?show=hostdetail&host={{ object.name }}' target="_blank">
                         <span class="mdi mdi-server-network" aria-hidden="true"></span> Host Status
                     </a>
                 </td>
-                <td><span class="badge bg-{{ nagios.state|nagios_status_color }}">{{ nagios.state|nagios_status_string }}</span></td>
+                <td><span class="badge bg-{{ nagios.current_state|nagios_status_color }}">{{ nagios.current_state|nagios_status_string }}</span></td>
                 <td></td>
             </tr>
-            {% for service in nagios.services_with_info %}
+            {% for service in nagios.services %}
             <tr>
-                <td><a href='{{ nagios_base_url }}extinfo.cgi?type=2&host={{ object.name }}&service={{ service.0 }}' target="_blank">{{ service.0 }}</a></td>
+                <td><a href='{{ nagios_base_url }}includes/components/xicore/status.php?show=servicedetail&host={{ object.name }}&service={{ service.display_name|urlencode }}' target="_blank">{{ service.display_name }}</a></td>
                 <td><span class="badge bg-{{ service.1|nagios_status_color }}">{{ service.1|nagios_status_string }}</span></td>
                 <td>{{ service.3 }}</td>
             </tr>
